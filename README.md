@@ -1,64 +1,82 @@
-# Proyecto Planify
+# Planify
 
-![Presentación sin título](https://github.com/user-attachments/assets/fac7a671-01fd-43de-b66f-3f2204f538fa)
+Aplicación web para gestionar espacios de trabajo y tareas, construida con **Next.js 14**, **Auth.js**, **Supabase**, **Redux Toolkit** y **Tailwind CSS**.
 
-Una aplicación web moderna para la gestión de tareas y espacios de trabajo, construida con Next.js 14, TypeScript, y Supabase.
+<p align="center">
+  <img src="docs/assets/planify-login.png" alt="Pantalla de inicio de sesión de Planify" width="100%" />
+</p>
 
-## 🚀 Características
+## Resumen
 
-- Autenticación de usuarios
-- Creación y gestión de espacios de trabajo
-- Gestión de tareas dentro de cada espacio
-- Interfaz responsiva y moderna
-- Persistencia de datos con Supabase
-- Gestión de estado con Redux Toolkit
+Planify centraliza tareas en espacios de trabajo. El flujo principal permite autenticación con Google, creación de espacios, carga de tareas y visualización de listas con formularios validados.
 
-## 🛠️ Tecnologías
+## Características
 
-- **Frontend:**
-  - Next.js 14
-  - TypeScript
-  - Redux Toolkit
-  - Tailwind CSS
-  - Shadcn/ui
+- Inicio de sesión con Google mediante Auth.js.
+- Persistencia y adaptador de autenticación con Supabase.
+- Gestión de espacios de trabajo.
+- Gestión de tareas por espacio.
+- Estado global con Redux Toolkit.
+- Formularios con React Hook Form y Zod.
+- UI con Tailwind CSS y componentes estilo shadcn/ui.
 
-- **Backend:**
-  - Supabase (Base de datos y autenticación)
+## Stack
 
-- **Herramientas de desarrollo:**
-  - ESLint
-  - Prettier
-  - Zod (validación de formularios)
-  - React Hook Form
+- Next.js 14.2.2
+- React 18
+- TypeScript
+- Auth.js / NextAuth v5 beta
+- Supabase
+- Redux Toolkit
+- Tailwind CSS
+- Zod
 
-## 📋 Requisitos previos
+## Variables de Entorno
 
-- Node.js 18.x o superior
-- npm o yarn
-- Cuenta en Supabase
-
-## 🔧 Instalación
+Creá un archivo `.env.local` en la raíz del proyecto:
 
 ```bash
-npm install
+AUTH_SECRET=your-auth-secret
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
+AUTH_GOOGLE_ID=your-google-client-id
+AUTH_GOOGLE_SECRET=your-google-client-secret
+SUPABASE_JWT_SECRET=your-supabase-jwt-secret
 ```
 
-## 🚪 Variables de entorno
-Agregar archivo .env.local en la raíz del proyecto:
+## Instalación
 
 ```bash
-AUTH_SECRET=TU-CLAVE
-NEXT_PUBLIC_SUPABASE_URL=TU-CLAVE
-NEXT_PUBLIC_SUPABASE_ANON_KEY=TU-CLAVE
-SUPABASE_SERVICE_ROLE_KEY=TU-CLAVE
-AUTH_GOOGLE_ID=TU-CLAVE
-AUTH_GOOGLE_SECRET=TU-CLAVE
-SUPABASE_JWT_SECRET=TU-CLAVE
-```
-
-## ▶︎ Inicio
-
-```bash
+npm ci
 npm run dev
 ```
 
+Abrí `http://localhost:3000`.
+
+## Validación Local
+
+Para actualizar la imagen del README se levantó la app localmente en `http://127.0.0.1:3014` con variables de entorno locales de prueba y se capturó la pantalla de inicio de sesión.
+
+Validación realizada:
+
+```bash
+npm ci
+npm run dev -- --hostname 127.0.0.1 --port 3014
+```
+
+`npm run build` compila el código, pero falla en la fase de lint por issues existentes:
+
+- `components/SkeletonBreadCrumbs.tsx`: comillas sin escapar (`react/no-unescaped-entities`).
+- `app/spaces/page.tsx`: warning de dependencia faltante en `useEffect`.
+
+## Estructura Relevante
+
+```text
+app/              # App Router de Next.js
+components/       # UI, auth, spaces y tasks
+redux/            # Store y slices
+services/         # Servicios de auth, espacios y tareas
+schemas/          # Validaciones Zod
+lib/              # Supabase client, utils y manejo de errores
+```
